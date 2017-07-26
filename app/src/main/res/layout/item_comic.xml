@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/spacing_normal"
+    android:paddingLeft="@dimen/spacing_normal"
+    >
+
+    <ImageView
+        android:id="@+id/item.image"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/error_placeholder"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/spacing_normal"
+        android:layout_marginRight="@dimen/spacing_normal"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/item.title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text.ComicHeader"
+            tools:text="An awesome title with an awesome large"
+            />
+
+        <TextView
+            android:id="@+id/item.text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text.ComicContent"
+            tools:text="This is an awesome description, of course is larger than the title, it must be, a well description has all the neccesar"
+            />
+    </LinearLayout>
+</LinearLayout>
+

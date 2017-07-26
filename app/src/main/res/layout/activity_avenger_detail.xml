@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress AndroidUnknownAttribute -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	>
+
+	<data>
+		<import type="android.view.View"/>
+		<import type="android.text.TextUtils"/>
+		<import type="mali.avengers.model.entities.ComicsCollection"/>
+
+		<variable name="presenter" type="mali.avengers.mvp.presenters.CharacterDetailPresenter"/>
+		<variable name="character" type="mali.avengers.model.entities.Character"/>
+		<variable name="darkSwatch" type="android.support.v7.graphics.Palette.Swatch"/>
+
+	</data>
+
+	<android.support.design.widget.CoordinatorLayout
+		android:id="@+id/parent"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fitsSystemWindows="true"
+ 		>
+
+		<android.support.design.widget.AppBarLayout
+			android:id="@+id/character_appbar"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+			android:fitsSystemWindows="true"
+ 			>
+
+			<android.support.design.widget.CollapsingToolbarLayout
+				android:id="@+id/character_collapsing"
+				android:layout_width="match_parent"
+				android:layout_height="350dp"
+				app:layout_scrollFlags="scroll|exitUntilCollapsed"
+				app:statusBarScrim="@{darkSwatch.rgb}"
+				app:contentScrim="@{darkSwatch.rgb}"
+				>
+
+				<FrameLayout
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					app:layout_collapseMode="parallax"
+					android:fitsSystemWindows="true"
+					>
+
+					<ImageView
+						android:id="@+id/character_image"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:layout_gravity="center"
+						android:scaleType="centerCrop"
+						android:fitsSystemWindows="true"
+						presenter="@{presenter}"
+						source="@{character.imageUrl}"
+						/>
+
+					<View
+						android:id="@+id/character_image_reveal"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						tools:background="#dc6767"
+						/>
+				</FrameLayout>
+
+				<android.support.v7.widget.Toolbar
+					android:id="@+id/character_toolbar"
+					android:layout_width="match_parent"
+					android:layout_height="?attr/actionBarSize"
+					android:elevation="@dimen/elevation_small"
+					app:title="@{character.name}"
+					style="@style/Toolbar.WithNavigationBack"
+					app:layout_collapseMode="pin"
+					android:background="@null"
+					/>
+
+			</android.support.design.widget.CollapsingToolbarLayout>
+
+
+			<FrameLayout
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/toolbar_x2"
+				android:elevation="@dimen/elevation_small"
+				android:background="?colorPrimaryDark"
+				android:orientation="vertical"
+				tools:background="#dc6767"
+				>
+
+				<View
+					android:id="@+id/character_stats_reveal"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:background="@{darkSwatch.rgb}"
+					android:visibility="invisible"
+					/>
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/toolbar_x2"
+					android:orientation="horizontal"
+					android:clickable="true"
+					android:background="?attr/selectableItemBackgroundBorderless"
+					android:baselineAligned="false"
+					>
+
+					<LinearLayout
+						android:id="@+id/character_comics_container"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onComicsIndicatorPressed}"
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/label_character_comics"
+							style="@style/Text.Header.Min"
+							/>
+
+						<TextView
+							android:id="@+id/character_comics"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:textSize="20sp"
+							android:text='@{"" + character.comics.available}'
+							tools:text="1"
+							/>
+					</LinearLayout>
+
+					<LinearLayout
+						android:id="@+id/character_events_container"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onEventIndicatorPressed}"
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/label_character_events"
+							style="@style/Text.Header.Min"
+							/>
+
+						<TextView
+							android:id="@+id/character_events"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="20sp"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:text='@{"" + character.events.available}'
+							tools:text="0"
+							/>
+					</LinearLayout>
+					<LinearLayout
+						android:id="@+id/character_series_container"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onSeriesIndicatorPressed}"
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/label_character_series"
+							style="@style/Text.Header.Min"
+							/>
+
+						<TextView
+							android:id="@+id/character_series"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="20sp"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:text='@{"" + character.series.available}'
+							tools:text="50"
+							/>
+					</LinearLayout>
+
+					<LinearLayout
+						android:id="@+id/character_stories_container"
+						android:layout_width="0dp"
+						android:layout_height="match_parent"
+						android:layout_weight="1"
+						android:orientation="vertical"
+						android:gravity="center"
+						android:clickable="true"
+						android:background="?attr/selectableItemBackgroundBorderless"
+						app:onClick="@{presenter.onStoriesIndicatorPressed}"
+						>
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/label_character_stories"
+							style="@style/Text.Header.Min"
+							/>
+
+						<TextView
+							android:id="@+id/character_stories"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:textSize="20sp"
+							android:layout_marginTop="@dimen/spacing_small"
+							android:text='@{"" + character.stories.available}'
+							tools:text="20"
+							/>
+					</LinearLayout>
+				</LinearLayout>
+			</FrameLayout>
+		</android.support.design.widget.AppBarLayout>
+
+		<android.support.v4.widget.NestedScrollView
+			android:id="@+id/character_nestedscroll"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:layout_behavior="@string/appbar_scrolling_view_behavior"
+			>
+
+			<LinearLayout
+				android:id="@+id/character_info_container"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				>
+
+				<TextView
+					android:id="@+id/character_label_info"
+					style="@style/Text.Header"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:paddingLeft="@dimen/spacing_normal"
+					android:text="@string/character_label_info"
+					android:textColor="@color/grey.light"
+					/>
+
+				<TextView
+					android:id="@+id/character_biography"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:lineSpacingExtra="8dp"
+					android:paddingLeft="@dimen/spacing_normal"
+					android:paddingRight="@dimen/spacing_normal"
+					android:text="@{TextUtils.isEmpty(character.description) ? @string/messages_empty_description : character.description}"
+					android:visibility="@{character != null ? View.VISIBLE : View.GONE}"
+					android:textSize="20sp"
+					tools:visibility="gone"
+					/>
+
+				<ProgressBar
+					android:id="@+id/activity_avenger_detail_progress"
+					style="?android:attr/progressBarStyleLarge"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
+					android:layout_gravity="center_horizontal"
+					android:visibility="@{character == null ? View.VISIBLE : View.GONE}"
+					/>
+			</LinearLayout>
+		</android.support.v4.widget.NestedScrollView>
+	</android.support.design.widget.CoordinatorLayout>
+</layout>
